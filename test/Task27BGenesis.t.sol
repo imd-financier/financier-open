@@ -5,7 +5,7 @@ import {FINCR} from "../src/FINCR.sol";
 import {FinancierMining} from "../src/FinancierMining.sol";
 import {FinancierMiningWithMarket} from "../src/FinancierMiningWithMarket.sol";
 import {FounderFundedMining} from "../src/FounderFundedMining.sol";
-import {RobinhoodJobController} from "../src/RobinhoodJobController.sol";
+import {RobinhoodJobController, INativeJobMining} from "../src/RobinhoodJobController.sol";
 import {AttestedAgentRounds} from "../src/AttestedAgentRounds.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -27,6 +27,7 @@ contract Task27BGenesisTest is Test {
     address constant BOB = address(102);
     FINCR token;
     FounderFundedMining miner;
+    RobinhoodJobController controller;
 
     function setUp() public {
         vm.chainId(4663);
@@ -43,7 +44,9 @@ contract Task27BGenesisTest is Test {
         INativeIntakeControl(INTAKE).setWriter(address(this));
         INativeIntakeControl(INTAKE).setCallbackGas(200_000);
         token = new FINCR(1e27);
+        controller = new RobinhoodJobController(address(this));
         miner = new FounderFundedMining(config());
+        controller.bindMiner(INativeJobMining(address(miner)));
         deal(IMD, ALICE, 100 ether); deal(IMD, BOB, 100 ether);
         vm.prank(ALICE); IERC20(IMD).approve(address(miner), type(uint256).max);
         vm.prank(BOB); IERC20(IMD).approve(address(miner), type(uint256).max);
@@ -51,7 +54,7 @@ contract Task27BGenesisTest is Test {
 
     function config() internal view returns (FinancierMiningWithMarket.Config memory c) {
         c = FinancierMiningWithMarket.Config(address(token), IMD, 1e27, 10 ether, 0.5 ether,
-            address(this), address(105), address(0), keccak256("SYNTHETIC candidate policy"), 1 days, 1 days, 1 hours, 0.1 ether);
+            address(this), address(105), address(controller), controller.SPECIFICATION(), 1 days, 1 days, 1 hours, 0.1 ether);
     }
     function start() internal {
         token.transfer(address(miner), 4e26);

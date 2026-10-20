@@ -1,0 +1,118 @@
+{
+  "abi": {
+    "abi/AgentRounds.json": "5587c7cdac4a16d93ada405a7eee725a4f3a49768771a15ffb7c4173b68a176e",
+    "abi/AttestedAgentRounds.json": "97aee0ebacbd93d19aa558385009ab45e999ecd2afb501d7621413eddf30fcd5",
+    "abi/FINCR.json": "b6a0311cb25ff9f13f62f4648e7c808c2a76b31fe3caade6bd7bed277616ebec",
+    "abi/FinancierFeeRouter.json": "8a5e631e9fdcd3f8b327fc18b3d86e414fe23faeee491cb2f3120703caadf904",
+    "abi/FinancierMining.json": "3fcebe7a1ae791ffc751767466601bbf7863d9700faa78700859653e9d674d3b",
+    "abi/FinancierMiningWithAgents.json": "fab5a524c4a5f15762f03d1c86d0fd18e6ad5b1e2629e22aa03604187eb046b7",
+    "abi/FinancierMiningWithMarket.json": "8c712c3f199c2a6ff3537137bbdcefe72599d5821c0c38c8521af2636c4ab77b",
+    "abi/FinancierMiningWithSettlement.json": "1cd99f3e8cb0e6dccb31eed10da01d0cfa30441bd09841735485f68bdbe2dbbb",
+    "abi/FounderFundedMining.json": "9113d96475b30e4774288ff2ea3a38b9d287f30349030d35c667fd96250496ac",
+    "abi/IAgentWorkVerifier.json": "2a1a61d9b89a63e51eb35c8b0a6de7048e0564bd024a0ffaa3a77df4c0d6f394",
+    "abi/IIMDIntake.json": "ff364879822633ef4b9c019bf8aa27b1d825720e5f4616298baf98d7128d7ea6",
+    "abi/PermanentV4Market.json": "ef88ec7c0a324de344496e575e03145c5e60e6016780838ad64f76b6befffe84",
+    "abi/PublisherGateway.json": "7dc1f6a7969ed3a42ff573aacfbd8293a0f0257ca16fac2d1e25dee92a7039ac",
+    "abi/ReserveForwarder.json": "b0594506da96b03932f12866cb9437c9fc60745fc105e5189f533d6c251ba80c",
+    "abi/RestrictedMarketReserveReceiver.json": "3c8ed3534ee340de08a8007a905f390321485862a118cb86fb9c3455e3c5b6a6",
+    "abi/RestrictedReserveReceiver.json": "1b3d02d910023b2355e7291bf53c5cdd8741e2b06658e2066e4dfaaac18f54a4",
+    "abi/RobinhoodJobController.json": "79d4ef5d0905d11339b474e399223efd275c027494639ee1d37870f08ba26f94",
+    "abi/SeatOwnerAgentRounds.json": "c43e1200c835d36ae1e7b851472f0fb415df9e4d5dfdea6dee90d6630eb3a3ba",
+    "abi/UnavailableWorkVerifier.json": "23797a737b57f4ca0e50c2251894fcaaec12920dabf14508f5aff51142f6ba0b"
+  },
+  "compiler": "0.8.30+commit.73712a01",
+  "compilerBinarySha256": "f3e987dc6ecebd4bd350c48edcbc320b46cf9e3109bd3fc3d88f1acaf4c428f7",
+  "contracts": [
+    {
+      "creationBytes": 2951,
+      "creationKeccak": "0x1869d4b31177a13bc9f8d12c2b2350f07885d233e0c5409198a734e77f021d4a",
+      "name": "FINCR",
+      "runtimeTemplateBytes": 1897,
+      "runtimeTemplateKeccak": "0xb3b7ebaada7f640060af1a7e9b5f5571caf2b4a84ad24a7eb80e0ba07894bc0a"
+    },
+    {
+      "creationBytes": 43542,
+      "creationKeccak": "0x0d78c2e3b2719ca2423fd2245c55d97396ce76d1184c1d7f4180851151233b03",
+      "name": "FinancierMiningWithMarket",
+      "runtimeTemplateBytes": 17320,
+      "runtimeTemplateKeccak": "0x7e193a8ec526a9d3634049482d79fa993552e492b0820dd6ded9c3b5d97c711d"
+    },
+    {
+      "creationBytes": 13817,
+      "creationKeccak": "0x6fc2b10a6d10d6dbd38799a6f237738e67240c2a10e72b9916a355f43a84a17f",
+      "name": "RestrictedMarketReserveReceiver",
+      "runtimeTemplateBytes": 10820,
+      "runtimeTemplateKeccak": "0xa4d6e396dca0336bfa403b8599b39a56723dac3b979f717c8a08de83d0d77809"
+    },
+    {
+      "creationBytes": 12243,
+      "creationKeccak": "0xbce306609c0964ee486f251eeb2a665ce0f767944fbca84602c7f1bca3d36a05",
+      "name": "AttestedAgentRounds",
+      "runtimeTemplateBytes": 11604,
+      "runtimeTemplateKeccak": "0xd92ceb60419f5983ee781c081d0f0ab222a9948a4ed5fc21afeeff0776bcf1fb"
+    },
+    {
+      "creationBytes": 12073,
+      "creationKeccak": "0xc59c2311c1000d7d801ef42489f140f49c6a8c6f5d7e8ee9a06ae1aa8caae373",
+      "name": "PermanentV4Market",
+      "runtimeTemplateBytes": 10909,
+      "runtimeTemplateKeccak": "0xd2653cf3f2537a2424e7be577b164d414129ee7a631d96f0ce1a595d57e0b6e5"
+    },
+    {
+      "creationBytes": 4775,
+      "creationKeccak": "0x78b15da79a72cebffed8c15f38c2f30a5d9eda338aba971e804fff37e1322719",
+      "name": "FinancierFeeRouter",
+      "runtimeTemplateBytes": 3741,
+      "runtimeTemplateKeccak": "0xc31a2520676ab794a181b0cff9bb68b139418c75a49cfad31a5745de89b332e8"
+    },
+    {
+      "creationBytes": 46047,
+      "creationKeccak": "0xc7089f91af955d621dcbe0f307991e4cfd449c011b7a14e62f8a2458d503d83f",
+      "name": "FounderFundedMining",
+      "runtimeTemplateBytes": 18784,
+      "runtimeTemplateKeccak": "0x2a3c8ccae2ae53333688bcccf886606d58bb967f6b9790bb7ada67f4783939c2"
+    },
+    {
+      "creationBytes": 8429,
+      "creationKeccak": "0x25865172fe60ca110d16d0e95275aa9ba3a3ac775d6a420cdabdc57e66714970",
+      "name": "RobinhoodJobController",
+      "runtimeTemplateBytes": 8196,
+      "runtimeTemplateKeccak": "0x916bba0da36c9e38135ba6d5704332f6367671c635a6d7b5f223c204a8706cb3"
+    },
+    {
+      "creationBytes": 12415,
+      "creationKeccak": "0x986f7bd7cb595cc08dde1a4bc025ab25fba0361610179aeea1c63dc047272735",
+      "name": "SeatOwnerAgentRounds",
+      "runtimeTemplateBytes": 11763,
+      "runtimeTemplateKeccak": "0xee0f9793631378d88f524696bb63e8a9262e9be74ec3803354fdc68df0d3070e"
+    }
+  ],
+  "gateway": {
+    "abiSha256": "7dc1f6a7969ed3a42ff573aacfbd8293a0f0257ca16fac2d1e25dee92a7039ac",
+    "baseMain": "556afc39997b0f3082276387219c0485c4679adb",
+    "bytecodeHash": "none",
+    "compiler": "0.8.30",
+    "contract": "PublisherGateway",
+    "creationBytes": 4125,
+    "creationKeccak": "0x1c0f52bb69b0dd8001f33ba9f5a6c95cfc77ed693fd71e960b28f1a4d1dd7337",
+    "evmVersion": "cancun",
+    "founder": "0xbcF19c0821A245383c127570615896Abac9e424F",
+    "fullInitcodeBytes": 4157,
+    "optimizerRuns": 200,
+    "runtimeBytes": 3667,
+    "runtimeKeccak": "0xeb4d071fc4392951730cc1e9d26cb737442281c62ec0a631927e7b2f710f8d6d",
+    "sourcePath": "src/PublisherGateway.sol",
+    "sourceSha256": "b1713323f3a127b99dd34f1dc7ce7bf7edf38fd592eeb746537eb1556cd6aa44",
+    "status": "PROTOTYPE_NOT_APPROVED_FOR_PRODUCTION",
+    "version": 2
+  },
+  "settings": {
+    "bytecodeHash": "none",
+    "evmVersion": "cancun",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": false
+  }
+}

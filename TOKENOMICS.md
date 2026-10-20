@@ -1,0 +1,7 @@
+# Approved economics
+
+FINANCIER ($FINCR) has a fixed initial supply of 1,000,000,000 tokens with 18 decimals, minted once; voluntary burns reduce totalSupply. The official IMD custom-token launch allocates a nominal 500M to the initial pool, 100M to the official swarm and 400M to the founder remainder. Verify actual factory rounding in its receipt. The founder transfers exactly 400M to mining; there is no additional founder/team allocation outside this reserve route. Tiny pool rounding dust remains outside mining.
+
+Mining runs for 365 days from the first accepted bid. The first 42 days emit 60% using three 14-day eras weighted 4:2:1; the tail emits the remaining 40%. The unchanged cumulative accounting bounds reserve issuance. 80% is financier tenure accrual, independent of work success. A separate 20% stream is shared equally per distinct accepted agent, aggregated by supported original seat-owner wallet. Unsupported shares, unused amounts and dust are quarantined without sweep or redirection.
+
+The Dutch auction opens at 10 IMD on arm and resets to 10 IMD on every takeover, declining to a persistent 0.5 IMD floor over one hour. No minimum holding period. Later bids allocate 80% to the outgoing financier, 5% to work, 7.5% to buyback/burn, 3.75% to permanently locked supplemental liquidity and 3.75% to Operations. Genesis has no outgoing financier and sends 85% to work. Allocations are budgets until actual payment/market execution. Bid payments are spent, not refundable deposits. No profit, fair execution price or incoming challenger is guaranteed.

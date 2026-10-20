@@ -323,7 +323,7 @@ contract AttestedAgentRounds is ReentrancyGuard {
         IAgentWorkVerifier.Contribution[] calldata accepted,
         OwnerEvidence[] calldata owners,
         uint256 snapshotTimestamp
-    ) private {
+    ) internal virtual {
         uint256 n = accepted.length;
         for (uint256 i; i < n; ++i) {
             IAgentWorkVerifier.Contribution memory a = accepted[i];
@@ -339,7 +339,7 @@ contract AttestedAgentRounds is ReentrancyGuard {
                     || a.identityExpiresAt != c.deadline
             ) revert InvalidContribution();
             if (
-                usedReceipt[a.receiptId] || usedSubmission[a.submissionHash] || usedArtifact[a.artifactHash]
+                usedReceipt[a.receiptId] || usedSubmission[a.submissionHash] || usedArtifact[_artifactReuseKey(a)]
                     || (jobRoundPlusOne[a.jobId] != 0 && jobRoundPlusOne[a.jobId] != id + 1)
             ) revert Duplicate();
             OwnerEvidence memory o = owners[i];
@@ -347,24 +347,43 @@ contract AttestedAgentRounds is ReentrancyGuard {
                 if (usedOwnerAuthorization[o.ownerAuthorizationHash]) revert Duplicate();
                 usedOwnerAuthorization[o.ownerAuthorizationHash] = true;
             }
-            // Authority must retain signed/destination/round-bound consent evidence for redirects.
-            if (a.beneficiary != a.controller && o.ownerAuthorizationHash == 0) revert InvalidContribution();
-            // A source contract at the same address must actually exist on Robinhood and
-            // have a reviewed claim path; otherwise use an owner-authorized compatible wallet.
-            if (a.beneficiary.code.length != 0 || (o.sourceOwnerIsContract && a.beneficiary == a.controller)) {
-                if (a.beneficiary.code.length == 0 || o.payoutCompatibilityHash == 0) revert InvalidContribution();
-            }
+            _validatePayout(a, o);
             for (uint256 j; j < i; ++j) {
-                if (
-                    identity(accepted[j]) == identity(a) || accepted[j].controller == a.controller
-                        || accepted[j].beneficiary == a.beneficiary || owners[j].nftId == o.nftId
-                ) revert Duplicate();
+                if (identity(accepted[j]) == identity(a) || _duplicateOwner(accepted[j], a, owners[j], o)) {
+                    revert Duplicate();
+                }
             }
             usedReceipt[a.receiptId] = true;
             usedSubmission[a.submissionHash] = true;
-            usedArtifact[a.artifactHash] = true;
+            usedArtifact[_artifactReuseKey(a)] = true;
             jobRoundPlusOne[a.jobId] = id + 1;
         }
+    }
+
+    /// @dev Legacy rounds consume raw artifacts globally; specialized rounds may scope reuse.
+    /// The original artifactHash remains untouched in evidence, commitments and events.
+    function _artifactReuseKey(IAgentWorkVerifier.Contribution memory a) internal pure virtual returns (bytes32) {
+        return a.artifactHash;
+    }
+
+    function _validatePayout(IAgentWorkVerifier.Contribution memory a, OwnerEvidence memory o) internal view virtual {
+        // Authority must retain signed/destination/round-bound consent evidence for redirects.
+        if (a.beneficiary != a.controller && o.ownerAuthorizationHash == 0) revert InvalidContribution();
+        // A source contract at the same address must actually exist on Robinhood and
+        // have a reviewed claim path; otherwise use an owner-authorized compatible wallet.
+        if (a.beneficiary.code.length != 0 || (o.sourceOwnerIsContract && a.beneficiary == a.controller)) {
+            if (a.beneficiary.code.length == 0 || o.payoutCompatibilityHash == 0) revert InvalidContribution();
+        }
+    }
+
+    function _duplicateOwner(
+        IAgentWorkVerifier.Contribution memory previous,
+        IAgentWorkVerifier.Contribution memory current,
+        OwnerEvidence memory previousOwner,
+        OwnerEvidence memory currentOwner
+    ) internal pure virtual returns (bool) {
+        return previous.controller == current.controller || previous.beneficiary == current.beneficiary
+            || previousOwner.nftId == currentOwner.nftId;
     }
 
     function _allocate(
@@ -377,19 +396,21 @@ contract AttestedAgentRounds is ReentrancyGuard {
         uint256 n = accepted.length;
         uint256 budget = _budget(c);
         uint256 share = n == 0 ? 0 : budget / n;
-        uint256 allocated = share * n;
+        uint256 allocated;
         rounds[id] = Round(true, budget, n, share, 0, digest);
         totalFinalizedBudget += budget;
+        for (uint256 i; i < n; ++i) {
+            allocated += _credit(id, accepted[i], owners[i], share);
+        }
         totalAllocated += allocated;
         totalQuarantined += budget - allocated;
-        for (uint256 i; i < n; ++i) {
-            _credit(id, accepted[i], owners[i], share);
-        }
         emit RoundFinalized(id, digest, budget, n, share, budget - allocated);
     }
 
     function _credit(uint256 id, IAgentWorkVerifier.Contribution memory a, OwnerEvidence memory o, uint256 share)
-        private
+        internal
+        virtual
+        returns (uint256)
     {
         claimable[id][a.beneficiary] = share;
         beneficiaries[id].push(a.beneficiary);
@@ -405,6 +426,7 @@ contract AttestedAgentRounds is ReentrancyGuard {
             o.payoutCompatibilityHash
         );
         emit AgentAccepted(id, identity(a), a.beneficiary, a.jobId, a.receiptId, a.submissionHash, a.artifactHash);
+        return share;
     }
 
     /// @notice After grace, anyone may close a missing/unsettled round without paying anyone.
@@ -420,6 +442,7 @@ contract AttestedAgentRounds is ReentrancyGuard {
     }
 
     function claim(uint256 id) external nonReentrant returns (uint256 amount) {
+        _beforeClaim();
         if (!rounds[id].finalized) revert NoClaim();
         amount = claimable[id][msg.sender];
         if (amount == 0) revert NoClaim();
@@ -429,4 +452,6 @@ contract AttestedAgentRounds is ReentrancyGuard {
         vault.payAgentReward(msg.sender, amount);
         emit AgentClaimed(id, msg.sender, amount);
     }
+
+    function _beforeClaim() internal view virtual {}
 }

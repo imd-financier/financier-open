@@ -1,0 +1,21 @@
+{
+  "chainId": 4663,
+  "status": "UNLAUNCHED_UNVERIFIED",
+  "website": "https://imd-financier.pages.dev/",
+  "token": null,
+  "miner": null,
+  "controller": null,
+  "rounds": null,
+  "market": null,
+  "founder": "0xbcF19c0821A245383c127570615896Abac9e424F",
+  "publisher": null,
+  "launchTransaction": null,
+  "deploymentBlock": null,
+  "runtimeHashes": null,
+  "signingEnabled": false,
+  "fallbackWebsite": "https://financier-7sf.pages.dev/",
+  "gateway": null,
+  "designatedOperator": "0x174818c4FEcB65472522Ff8C7677F5A567cB3020",
+  "websiteVerification": "Founder-reported deployment; not proof of operational mining",
+  "publicAuditStatus": "PENDING_INDEPENDENT_REVIEW"
+}

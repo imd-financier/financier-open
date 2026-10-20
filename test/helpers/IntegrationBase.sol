@@ -70,7 +70,7 @@ abstract contract IntegrationBase is Test {
             keccak256("manifest"),
             keccak256("attestation"),
             keccak256("verifier-key"),
-            "https://github.com/imd-financier/financier"
+            "https://github.com/imd-financier/financier-open"
         );
         ReserveForwarder.Config memory c = ReserveForwarder.Config(
             address(factory),

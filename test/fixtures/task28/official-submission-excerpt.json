@@ -1,0 +1,16 @@
+{
+  "jobId": "19f2918d-96cd-461f-a411-193c3fbf4980",
+  "submissions": [
+    {
+      "hash": "df38c9a037d8c22c6b7cc3714b3ceda1570b5da03036249562e28467683191e9",
+      "nodeKey": "research_report",
+      "seat": {
+        "tokenId": "343",
+        "agentId": "51506"
+      },
+      "accepted": true,
+      "outcome": "completed",
+      "createdAt": "2026-10-17T21:25:56.005Z"
+    }
+  ]
+}

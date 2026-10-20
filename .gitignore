@@ -1,8 +1,0 @@
-out/
-cache/
-broadcast/
-.env
-.env.*
-*.key
-*.pem
-__pycache__/

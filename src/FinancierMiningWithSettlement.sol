@@ -61,8 +61,13 @@ contract FinancierMiningWithSettlement is FinancierMining {
         uint256 graceSeconds_,
         uint256 identityMaxAge_
     ) FinancierMining(fincr_, imd_, supply_, initialQuote_, floor_, initializer_, operationsRecipient_) {
-        agentRounds =
-            new AttestedAgentRounds(address(this), authority_, policy_, roundSeconds_, graceSeconds_, identityMaxAge_);
+        agentRounds = _createAgentRounds(authority_, policy_, roundSeconds_, graceSeconds_, identityMaxAge_);
+    }
+
+    function _createAgentRounds(address authority, bytes32 policy, uint256 seconds_, uint256 grace, uint256 maxAge)
+        internal virtual returns (AttestedAgentRounds)
+    {
+        return new AttestedAgentRounds(address(this), authority, policy, seconds_, grace, maxAge);
     }
 
     function agentController() public view override returns (address) {

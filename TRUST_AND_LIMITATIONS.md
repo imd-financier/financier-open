@@ -1,0 +1,13 @@
+# Trust and present limitations
+
+The controller's publisher is the immutable gateway contract. The gateway founder can pause and rotate its separate operator; rotation always pauses. The founder cannot replace its one-time controller binding. The operator can relay admissions/snapshots/finalizations only; it cannot rotate itself, unpause, withdraw the mining reserve, change economics or block financier claims through agent settlement. Founder key loss and operator/key compromise remain operational risks. No unattended production signer/monitoring service is supplied or claimed.
+
+Ethereum WorkRegistry commitments can authenticate report bytes on Ethereum. Official API joins, accepted-set completeness and original NFT owner snapshots are resolved off-chain by the publisher. Robinhood receives trusted evidence assertions, not a trustless Ethereum bridge. A dishonest publisher can omit or falsely include agents within the bounded20% stream. Neither NFT ownership nor a successful callback alone establishes accepted FINANCIER work.
+
+Rounds last24hours with up to one day settlement grace and one-hour identity freshness bounds. Period zero scope is prepared at arm. Work must satisfy admission and submission timing rules. More than32 agents, inconsistent joins, missing archive state or incomplete evidence requires refusal, never truncation or invented recipients. A post-period NFT transfer cannot redirect an allocated past claim. Contract/code-bearing source/destination owners are unsupported; their shares are quarantined. Unused/dust/unfinalized allocations cannot be redirected or swept; allocated unclaimed rewards do not expire.
+
+The current standard off-chain resolver refuses the entire period if any commissioned job fails, even if another job succeeded. That can leave otherwise successful agents unpaid until the allocation expires to quarantine. Financier tenure rewards remain independent. Test publisher assertions are synthetic; no production-positive accepted FINANCIER agent job is established by these tests.
+
+The official launch service may adapt imported source. A free request check is not final-bytecode admission. Actual canonical source/runtime/supply/allocations/requester must match before miner deployment or funding. An unsigned request is not a launched token. Founder-funding donations cannot be recovered; exactly400M must be verified at the correct miner before arm.
+
+Optional buyback/LP operations can fail or suffer unfavorable market conditions; spot bounds do not prevent every manipulation. No bid recovery, FINCR value, liquidity exit, investment return or audit guarantee is promised. The prelaunch security-review job is separate from postlaunch work rounds and earns no mining-agent allocation.

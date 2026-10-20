@@ -1,71 +1,21 @@
-# FINANCIER — mining and auction contracts
+# FINANCIER ($FINCR)
 
-Reviewed source and tests for the FINANCIER Robinhood Chain (4663) mining-auction candidate.
-This repository is a clean source snapshot, with no private development history or website.
-No production token or mining deployment address is endorsed here.
+FINANCIER is an IMD-denominated Dutch-auction mining protocol on Robinhood Chain (4663). A winning financier holds the exclusive iFinancier position and accrues FINCR for actual tenure, independently of agent work. Bids finance FINANCIER's own swarm-powered research, security and growth work. The separate agent stream rewards accepted FINANCIER work equally per distinct authenticated agent.
 
-## Current status
+Website: https://imd-financier.pages.dev/ · X: https://x.com/imd_financier
 
-**Agent payout integration is blocked.** Official Intake purchase/completion is implemented,
-but no authenticated complete agent/work/payout-wallet settlement interface has been
-established. The immutable `FounderFundedMining` candidate cannot finalize agent rounds,
-enable them later, upgrade or migrate its reserve. Unsupported agent allocations remain
-quarantined. Resolve this limitation before deploying/funding a production reward system.
-No completed independent IMD audit is claimed. Passing tests are not an audit or a guarantee.
+**Prelaunch production candidate. No completed independent audit, deployed FINCR/miner, live mining or unattended automation is claimed.** The founder reports a successful Cloudflare deployment; a deployed website is not a deployed protocol. See DEPLOYMENTS.json and TRUST_AND_LIMITATIONS.md.
 
-## Contract entry point
+The auction opens at 10 IMD when armed and after every bid, declining to 0.5 IMD over one hour. Bids are spent; they are not refundable deposits. On later bids, 80% goes to the outgoing financier, 5% to work, 7.5% to buyback/burn, 3.75% to permanent supplemental liquidity and 3.75% to Operations. Genesis sends the otherwise outgoing 80% to work (85% total). Budgets do not prove execution or profit.
 
-`src/FounderFundedMining.sol` reuses the mining vault and auction implementation. It creates
-`AttestedAgentRounds`, `PermanentV4Market` and `RobinhoodJobController` during construction.
-All inherited contracts, helpers, interfaces and dependencies belong in an audit scope.
-Other reserve receivers and mining variants are preserved for regression coverage; they are
-historical alternatives, not additional components of the founder-funded deployment route.
+The intended official token launch supplies exactly 1B FINCR (18 decimals): 50% initial pool, 10% official IMD swarm, 40% founder remainder. The founder subsequently transfers exactly 400M to the independently verified miner and arms it. Over 365 days from the first accepted bid, 80% of mining emissions accrues to financiers; 20% goes to bounded equal-share accepted-agent rounds. Unsupported allocations, unused agent emissions and rounding dust remain quarantined.
 
-Approved supply is 1B FINCR: 50% official initial liquidity, 10% official swarm, 40% mining.
-After normal official launch and canonical source/allocation verification, the founder
-transfers exactly 400M FINCR into the verified miner, then calls `arm()` explicitly.
-The auction opens at 10 IMD and declines linearly to 0.5 IMD over one hour. The first successful
-bid starts 365-day emissions. Every subsequent takeover resets the opening quote to 10 IMD.
-Mining emissions are 80% financier and 20% equally shared qualifying distinct agents;
-failed, empty, unrelated, duplicated or unauthenticated work earns no agent reward.
-No quality score is required. Financier claims do not depend on work success.
+`PublisherGateway` v2 → `RobinhoodJobController` → `FounderFundedMining` → `SeatOwnerAgentRounds` / `PermanentV4Market`. The gateway is initially paused. Its fixed founder can pause and replace the designated operator, which pauses forwarding. Its one-time controller binding must precede controller/miner binding. The controller publisher is the gateway contract, never the operator EOA.
 
-Subsequent bid allocation: 80% outgoing financier, 5% work budget, 7.5% buyback/burn,
-3.75% permanently locked supplemental LP and 3.75% Operations. The first bid has no outgoing
-financier, so its otherwise outgoing 80% is added to work (85% total work). Optional payouts
-and market execution are bounded and can defer without blocking a takeover. Deferred
-credits/budgets remain accounted for. The market uses capped spot-based bounds, not an
-independent price oracle; pre-transaction price manipulation/MEV remains a disclosed risk.
-No trading toggle or custom launch gate is introduced.
+The supervised publisher resolves official IMD Intake/job/records to committed Ethereum WorkRegistry documents, accepted agent IDs, submission seat token IDs and original NFT `ownerOf` snapshots. Ethereum evidence and joins are checked off-chain and relayed on Robinhood. **This is a trusted publisher, not a trustless bridge or proof of completeness.** A compromised publisher can misallocate the bounded 20% agent stream; financier claims remain independent. See ARCHITECTURE.md and TRUST_AND_LIMITATIONS.md.
 
-## Reproduce
+Reproduce with Foundry v1.7.1 and Solidity 0.8.30: `forge build`, `forge test`, then `FOUNDRY_PROFILE=extended forge test --match-test invariant`. See VERIFICATION.md for canonical-runtime fork rehearsal and ABI/build checks. Dependencies are vendored at exact foundry.lock revisions. SOURCE_MANIFEST.json hashes every payload file except itself; BUILD_PINS.json records the reviewed creation/runtime templates and ABI evidence. Templates must be patched for actual immutable values before comparing deployed code.
 
-Foundry 1.7.1 and Solidity 0.8.30, optimizer 200, Cancun, metadata hash none.
-Dependencies are git submodules pinned by `foundry.lock`.
+All 23 project Solidity files are retained so reviewers can reproduce historical regressions. The production candidate is the founder-funded miner with gateway/controller/rounds/market above. Older receiver, forwarder, verifier, alternate miner and fee-router modules are historical or deferred, not additional production deployments. See CONTRACT_INVENTORY.md.
 
-```sh
-git clone --recurse-submodules https://github.com/imd-financier/financier-open.git
-cd financier-open
-forge test
-FOUNDRY_PROFILE=extended forge test --match-test invariant
-```
-
-Tests use explicitly synthetic identities, receipts, ownership and writer impersonation.
-Saved official runtime bytecode is exercised locally; this does not turn synthetic test
-contributions into authentic production work. The empty-work success regression demonstrates
-why a nonzero completion hash cannot authorize a payout. Additional fixtures/older variants
-exist to preserve accounting, authority, replay and custody regressions.
-
-For a keyless local rehearsal against the genuine Robinhood contracts:
-
-```sh
-python script/rehearse-real-factory.py --out /tmp/financier-fork
-```
-
-This starts an account-free loopback Anvil fork. Privileged factory/writer impersonation and
-synthetic FINCR exist only in that local fork. It never broadcasts or pays a live job. RPC
-availability and runtime/fee drift can prevent a later reproduction; review failures explicitly.
-
-`abi/` contains interfaces generated from the reviewed source. `SNAPSHOT.json` records
-source/test/config hashes and reviewed code pins. No wallet key, signing tool, deployment
-script, payable job or enabled production frontend is included.
+The original public launch source commit `153f1ebeca4951013168609adcc6b0a17c32dc54` remains unchanged and remains the token-launch request's source. This snapshot is a separate audit candidate. No private development Git history is exported. SPDX and dependency notices remain intact.
